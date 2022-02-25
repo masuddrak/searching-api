@@ -2,16 +2,25 @@ const seachProduct=()=>{
     const search=document.getElementById('seach');
     const seachText=search.value;
     search.value=''
-    const url=`https://www.themealdb.com/api/json/v1/1/search.php?s=${seachText}`
+    if(seachText==''){
+      const emtySearch=document.getElementById('emtySearch');
+      emtySearch.innerText=''
+      const h2=document.createElement('h2');
+      h2.innerHTML=`<h2>please type a product</h2>`
+      emtySearch.appendChild(h2)
+    }else{
+      const url=`https://www.themealdb.com/api/json/v1/1/search.php?s=${seachText}`
     // console.log(url)
     fetch(url)
     .then(res=>res.json())
     .then(data=>totalMeals(data.meals))
+    emtySearch.innerText=''
+    }
 }
 
 const totalMeals=meals=>{
     const productContainer=document.getElementById('productContainer');
-    productContainer.innerText=''
+    productContainer.innerHTML=''
     // console.log(meals);
     meals.forEach(meal => {
         // console.log(meal.idMeal)
@@ -41,7 +50,7 @@ const mealDetails=mealId=>{
 const showMealDetails=Id=>{
   console.log(Id.meals[0].strYoutube)
   const porductDetails=document.getElementById('porductDetails');
-  porductDetails.innerText=''
+  porductDetails.innerHTML=''
   const div=document.createElement('div');
   div.classList.add('card')
   div.innerHTML=`
